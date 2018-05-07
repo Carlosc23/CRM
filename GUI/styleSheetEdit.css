@@ -57,51 +57,19 @@ ul li h1{
 #sidebar a:hover{
   color:#008080;
 }
-.label1{
-  position: absolute;
-  left:250px;
-  top:290px;
-  font-size: 20px;
-}
-.label2{
-  position: absolute;
-  left:250px;
-  top:390px;
-  font-size: 20px;
-}
-.label3{
-  position: absolute;
-  left:250px;
-  top:490px;
-  font-size: 20px;
-}
-.label4{
-  position: absolute;
-  left:250px;
-  top:590px;
-  font-size: 20px;
-}
-.label5{
-  position: absolute;
-  left:250px;
-  top:690px;
-  font-size: 20px;
-}
-.label6{
-  position: absolute;
-  left:250px;
-  top:850px;
-  font-size: 20px;
-}
-.label7{
-  position: absolute;
-  left:675px;
-  top:850px;
-  font-size: 20px;
-}
-.label8{
-  position: absolute;
-  left:250px;
-  top:790px;
-  font-size: 20px;
+
+input[name="search"]{
+  position:absolute;
+  top:35%;
+  left:20%;
+  width: 1000px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  background-image: url('iconoBusqueda.png');
+  background-position: 10px 10px;
+  padding: 12px 20px 12px 40px;
+
 }

@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <style>
   body,h1,h2,h3,h4,h5 {font-family:"Helvetica Neue",Helvetica,Arial}
-  label,input {font-family:"Helvetica",Arial}
+  label,input,option {font-family:"Helvetica",Arial}
 </style>
 </head>
 <body>
@@ -14,14 +14,12 @@
     </div>
     <div id="sidebar">
           <ul>
-            <li><h1> Bienvenido!</h1>
+            <li><h1> Welcome!</h1>
             <li><a href="main.html">Dashboard</a></li>
             <li>
               <dt>Database Manager</dt>
-              <dd><a href="dbm-add.html"> - Agregar Cliente</a></dd>
-              <dd><a href="dbm-remove.html"> - Eliminar Cliente</a></dd>
-              <dd><a href="dbm-search.html"> - Buscar Cliente</a></dd>
-              <dd><a href="dbm-update.html"> - Actualizar Cliente</a></dd></li>
+              <dd><a href="dbm-add.html"> - Add Client</a></dd>
+              <dd><a href="dbm-edit.html"> - Edit Client</a></dd>
             <li><a href="sm.html">Social Media</a></li>
             <li><a href="stats.html">Statistics</a></li>
           </ul>
@@ -55,14 +53,20 @@
           <label>Nit</label>
         </div>
           <input class="w3-input w3-display-position" type="text" style="width:80%;top:650px;left:250px"></p>
+          <p>
+            <div class="label8">
+              <label>Email</label>
+            </div>
+              <input class="w3-input w3-display-position" type="text" style="width:80%;top:750px;left:250px"></p>
         <p>
           <div class="label6">
-            <label>Fecha de Nacimiento:</label>
+            <label>Date of Birth:</label>
           </div>
-            <input class="w3-date w3-display-position" type="date" style="width:10%;top:850px;left:450px"></p>
+            <input class="w3-date w3-display-position" type="date" style="width:10%;top:850px;left:450px">
+          </p>
             <p>
               <div class="label7">
-                <label>Sexo:</label>
+                <label>Sex:</label>
               </div>
                 <select class="w3-select w3-display-position" name="option" style="width:10%;top:840px;left:750px">
                   <option value="" disabled selected>Choose Option</option>
@@ -70,13 +74,6 @@
                   <option value="2">Female</option>
                 </select>
               </p>
-      <!--<p>
-          <label>Sex</label>
-          <input class="w3-check" type="checkbox" checked="checked">
-          <label>Male</label>
-          <input class="w3-check" type="checkbox">
-          <label>Female</label></p>
--->
     </form>
 
 </body>
