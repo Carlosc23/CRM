@@ -45,6 +45,8 @@ def add():
        # genurl = img['url']
        # os.remove(filename)
        # print("URL",'--> ',genurl)
+        #insert_patient('(select max(id) from paciente)+1', idprofesion, nombre, apellido, dpi, sexo, telefono, correo, fechanacimiento, foto,
+         #              usuariotwitter, pagomedicinas=0):
         return render_template('add.html')
     else:
         return render_template('add.html')
