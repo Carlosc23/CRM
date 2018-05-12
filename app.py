@@ -9,6 +9,8 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
+from crm_actions.module1_actions import get_idpaciente, insert_patient, get_profession
+
 urllib3.disable_warnings()
 
 cloudinary.config(
@@ -41,12 +43,24 @@ def add():
         filename = os.path.join(app.config['UPLOAD_FOLDER'], f.filename)
         f.save(filename)
         print(filename)
-       # img = cloudinary.uploader.upload(UPLOAD_FOLDER+'/'+f.filename)
-       # genurl = img['url']
-       # os.remove(filename)
-       # print("URL",'--> ',genurl)
-        #insert_patient('(select max(id) from paciente)+1', idprofesion, nombre, apellido, dpi, sexo, telefono, correo, fechanacimiento, foto,
-         #              usuariotwitter, pagomedicinas=0):
+        id = get_idpaciente()
+        print(id)
+        img = cloudinary.uploader.upload(UPLOAD_FOLDER+'/'+f.filename)
+        genurl = img['url']
+        os.remove(filename)
+        print("URL",'--> ',genurl)
+        print(request.form['Name'])
+        print(request.form['LastName'])
+        print(request.form['DPI'])
+        print(request.form['option'])
+        print(request.form['Telephone'])
+        print(request.form['Email'])
+        print(request.form['Birth'])
+        print(request.form['Twitter'])
+        insert_patient(id, get_profession(request.form['TCareer'],request.form['Career']), request.form['Name'], request.form['LastName'], request.form['DPI'],
+                       request.form['option'],
+                       request.form['Telephone'], request.form['Email'], request.form['Birth'], genurl,
+                       request.form['Twitter'], 0)
         return render_template('add.html')
     else:
         return render_template('add.html')
