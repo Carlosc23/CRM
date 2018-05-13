@@ -9,7 +9,7 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-from crm_actions.module1_actions import get_idpaciente, insert_patient, get_profession
+from crm_actions.module1_actions import get_idpaciente, insert_patient, get_profession, get_paciente, delete_patient
 
 urllib3.disable_warnings()
 
@@ -33,8 +33,22 @@ def index():
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
+    if request.method == 'POST':
+        for i in request.form:
+            print(i, "-->", request.form[i])
+        searchterm = request.form['search']
+        filter = request.form['filter']
+        data =  get_paciente(filter, searchterm)
+        for item in data:
+            print(item)
+        return render_template('search.html',data=data)
     return render_template('search.html')
 
+@app.route('/delete/<paciente_id>', methods=['POST'])
+def delete(paciente_id):
+    delete_patient(paciente_id)
+    print(paciente_id)
+    return render_template('deleteProfile.html')
 @app.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
