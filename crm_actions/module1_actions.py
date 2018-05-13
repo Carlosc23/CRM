@@ -41,6 +41,25 @@ def insert_patient(id, idprofesion, nombre, apellido, dpi, sexo, telefono, corre
     return vendor_id
 
 
+def get_paciente(filter, searchterm):
+    sql = """select * from paciente where """ + filter + """ LIKE '%""" + searchterm + """%'"""
+    conn = None
+    try:
+        params = config()
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        cur.execute(sql)
+        data = cur.fetchall()
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+    return data
+
+
 def get_profession(nombre, tipo):
     """ query data from the profesion table """
     sql = """SELECT id FROM profesion WHERE nombre = %s AND tipo = %s """
@@ -60,6 +79,34 @@ def get_profession(nombre, tipo):
         if conn is not None:
             conn.close()
     return row
+
+
+def delete_patient(part_id):
+    """ delete part by part id """
+    conn = None
+    rows_deleted = 0
+    try:
+        # read database configuration
+        params = config()
+        # connect to the PostgreSQL database
+        conn = psycopg2.connect(**params)
+        # create a new cursor
+        cur = conn.cursor()
+        # execute the UPDATE  statement
+        cur.execute("DELETE FROM paciente WHERE id = %s", (part_id,))
+        # get the number of updated rows
+        rows_deleted = cur.rowcount
+        # Commit the changes to the database
+        conn.commit()
+        # Close communication with the PostgreSQL database
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+
+    return rows_deleted
 
 
 def get_idpaciente():
@@ -83,8 +130,7 @@ def get_idpaciente():
             conn.close()
     return row + 1
 
+# print(get_profession('Arquitectura','Arquitectur'))
 
-#print(get_profession('Arquitectura','Arquitectur'))
-
-#print(get_idpaciente())
+# print(get_idpaciente())
 # print (insert_patient(33,7,'Carla','Ovalle',34567,'F',31600978,'cas15151@uvg.edu.gt','1988-03-06','ff','@sam',0))
