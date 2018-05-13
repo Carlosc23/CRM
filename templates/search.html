@@ -93,7 +93,7 @@ html>
   </tr>
     {% for item in data %}
   <tr>
-   <form id={{item[0]}} action="/delete/{{item[0]}}" method="post"enctype="multipart/form-data">
+
     <td>{{item[2]}}</td>
     <td>{{item[3]}}</td>
       <td>{{item[4]}}</td>
@@ -104,14 +104,19 @@ html>
   <td>{{item[11]}}</td>
   <td>
       {% set testing = 'it worked' %}
-      <button class="editbtn">edit</button><button class="deletebtn" type="button" onclick=" if (confirm(' you sure that you want to delete this client?')) {
+      <form id={{item[0]}} action="/update/{{item[0]}}" method="get"enctype="multipart/form-data">
+      <button class="editbtn" type="submit" >edit</button>
+           </form>
+      <form id={{item[0]}} action="/delete/{{item[0]}}" method="post"enctype="multipart/form-data">
+      <button class="deletebtn" type="button" onclick=" if (confirm(' you sure that you want to delete this client?')) {
         console.log('yes');
         document.getElementById({{item[0]}}).submit();
 
   }
   return false;" >delete</button>
+          </form>
   </td>
-       </form>
+
   </tr>
     {% endfor %}
 </table>
