@@ -1,0 +1,48 @@
+html>
+<head>
+  <title>CRM</title>
+  <link rel="stylesheet" type="text/css" href="{{
+  url_for('static', filename='styleSheetEdit.css') }}">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <style>
+  body,h1,h2,h3,h4,h5 {font-family:"Helvetica Neue",Helvetica,Arial}
+  label,input,option {font-family:"Helvetica",Arial}
+</style>
+</head>
+<body>
+      <div id="Overview-Screen">
+      <h1> Database Manager </h1>
+    </div>
+    <div id="sidebar">
+          <ul>
+            <li><h1> Welcome!</h1>
+            <li><a href="main.html">Dashboard</a></li>
+            <li>
+              <dt>Database Manager</dt>
+              <dd><a href="add"> - Add Client</a></dd>
+              <dd><a href="search"> - Search Client</a></dd>
+            <li><a href="sm.html">Social Media</a></li>
+            <li><a href="stats.html">Statistics</a></li>
+          </ul>
+    </div>
+  </div>
+
+  <div class="w3-container w3-teal w3-display-position" style="width:80%;top:150px;left:250px">
+    <h1>Search Client</h1>
+  </div>
+   <form>
+    <input type="text" name="search" placeholder="Search..">
+   <select class="w3-select w3-display-position" name="option" name="Sex" style=" width:10%;top:350px;left:250px ">
+              <option value="" disabled selected>Choose a filter</option>
+              <option value="nombre">Name</option>
+              <option value="apellido">Last Name</option>
+              <option value="dpi">DPI</option>
+              <option value="sexo">Sex</option>
+              <option value="teléfono">Telephone</option>
+              <option value="correo">Email</option>
+              <option value="fechanacimiento">Age</option>
+            </select>
+    <input class="w3-select w3-display-position" type="submit" style="width:5%;top:270px;left:1320px"/>
+</form>
+</body>
+</html>

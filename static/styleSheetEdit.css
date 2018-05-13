@@ -1,0 +1,75 @@
+body{
+  margin: 0px;
+  padding: 0px;
+  font-family:"Helvetica Neue",Helvetica,Arial;
+}
+#sidebar{
+  background:#151718;
+  width: 200px;
+  height: 150%;
+  display: block;
+  position:absolute;
+  left:0px;
+  top:0px;
+}
+#Overview-Screen h1{
+  position: absolute;
+  left: 35%;
+  top: 40px;
+  line-height: 0;
+  text-align: center;
+  font-size: 75px;
+}
+ul{
+  margin:0px;
+  padding: 0px;
+}
+ul li{
+  list-style: none;
+}
+ul li a{
+  background: #1C1E1F;
+  color: #CCC;
+  border-bottom: 1px solid #111;
+  display:block;
+  width: 100px;
+  padding: 10px;
+  text-decoration: none;
+}
+ul li dt{
+  background: #1C1E1F;
+  color: #CCC;
+  border-bottom: 1px solid #111;
+  display:block;
+  width: 100px;
+  padding: 0px;
+  text-decoration: none;
+}
+ul li h1{
+  background: #1C1E1F;
+  color: #CCC;
+  border-bottom: 1px solid #111;
+  display:block;
+  width: 100px;
+  padding: 10px;
+  text-decoration: none;
+}
+#sidebar a:hover{
+  color:#008080;
+}
+
+input[name="search"]{
+  position:absolute;
+  top:35%;
+  left:20%;
+  width: 1000px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  background-image: url('iconoBusqueda.png');
+  background-position: 10px 10px;
+  padding: 12px 20px 12px 40px;
+
+}

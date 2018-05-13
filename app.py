@@ -31,6 +31,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def index():
     return render_template('main.html')
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    return render_template('search.html')
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
