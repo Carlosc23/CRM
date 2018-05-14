@@ -11,6 +11,7 @@ import cloudinary.api
 
 from crm_actions.module1_actions import get_idpaciente, insert_patient, get_profession, get_paciente, delete_patient
 
+
 urllib3.disable_warnings()
 
 cloudinary.config(

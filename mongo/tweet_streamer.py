@@ -2,7 +2,6 @@
 #Nombre: Marlon Fuentes y Carlos Calderon
 #Funcion: Obtencion de tweets
 #Modulo: tweepy
-import tweepy
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
@@ -17,33 +16,18 @@ class TwitterClient():
         self.twitter_client=API(self.auth)
         self.twitter_user=twitter_user
 
-    def getTweets(self):
+    def getTweets(self,numberOfTweets):
         tweets=[]
         try:
-            for tweet in Cursor(self.twitter_client.user_timeline, id=self.twitter_user).items():
-                #for i in lista:
-                if (not tweet.retweeted) and ('RT @' not in tweet.text): #and (i in tweet.text):
-                    tweets.append(tweet.text)
+            for tweet in Cursor(self.twitter_client.user_timeline, id=self.twitter_user).items(numberOfTweets):
+                tweets.append(tweet)
             return tweets
         except Exception as e:
             print("User Not Found")
 
-    def getFollowers(self):
-        followers=[]
-        try:
-            for i in Cursor(self.twitter_client.followers_ids,id=self.twitter_user).items():
-                followers.append(i)
-            return len(followers)
-        except Exception as e:
-            print("Followers empty")
-    def getFavorites(self):
-        favorites=[]
-        try:
-            for i in Cursor(self.twitter_client.favorites,id=self.twitter_user).items():
-                favorites.append(i.text)
-            return favorites
-        except Exception as e:
-            print("Followers empty")
+
+
+
 class TwitterAuthenticator():
 
     def authenticate(self):
