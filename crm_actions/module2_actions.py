@@ -30,12 +30,12 @@ class TwitterClient():
 
     def getFollowers(self):
         followers=[]
-       #try:
-        for i in Cursor(self.twitter_client.followers_ids,id=self.twitter_user).items():
-            followers.append(i)
-        return len(followers)
-        #except Exception as e:
-            #print("Followers empty")
+        try:
+            for i in Cursor(self.twitter_client.followers_ids,id=self.twitter_user).items():
+                followers.append(i)
+            return len(followers)
+        except Exception as e:
+            print("Exceded Range")
     def getFavorites(self):
         favorites=[]
         try:

@@ -7,6 +7,7 @@ from tweepy import Stream
 from tweepy import Cursor
 from tweepy import API
 import twitterCredentials
+
 import re
 
 
@@ -28,6 +29,7 @@ def ingresarTwitter(theUsername):
 
     collection.insert(username)
 
+
 def retornarTweets(user):
     lista = []
     var={}
@@ -43,6 +45,7 @@ def retornarFollowers(user):
         lista.append(i)
     var = lista.pop()
     return var["numeroDeFollowers"]
+
 
 def retornarFavs(user):
     lista = []
@@ -76,4 +79,10 @@ def todosLosTweets():
         for elem in row:
             listaResultado.append(elem)
     return listaResultado
-
+def influencers():
+    listaUsers=[]
+    for i in db.tweets.find({"numeroDeFollowers":{"$gt":1000}},{"_id":1}):
+        listaUsers.append(i["_id"])
+    return listaUsers
+a=influencers()
+print(a)
