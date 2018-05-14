@@ -9,17 +9,17 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-from crm_actions.module1_actions import get_idpaciente, insert_patient, get_profession, get_paciente, delete_patient
+from crm_actions.module1_actions import get_idpaciente, insert_patient, get_profession, get_paciente, delete_patient, \
+    update_paciente
 
 
 urllib3.disable_warnings()
 
 cloudinary.config(
-    cloud_name = 'drc2h3d9n',
-    api_key = '596916237749538',
-    api_secret = '78HRHwp-Ceo7DktRXeMh2gDNdU0'
-    )
-
+    cloud_name='drc2h3d9n',
+    api_key='596916237749538',
+    api_secret='78HRHwp-Ceo7DktRXeMh2gDNdU0'
+)
 
 UPLOAD_FOLDER = 'static/tmpImages'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -32,6 +32,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def index():
     return render_template('main.html')
 
+
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == 'POST':
@@ -39,17 +40,53 @@ def search():
             print(i, "-->", request.form[i])
         searchterm = request.form['search']
         filter = request.form['filter']
-        data =  get_paciente(filter, searchterm)
+        data = get_paciente(filter, searchterm)
         for item in data:
             print(item)
-        return render_template('search.html',data=data)
+        return render_template('search.html', data=data)
     return render_template('search.html')
+
 
 @app.route('/delete/<paciente_id>', methods=['POST'])
 def delete(paciente_id):
     delete_patient(paciente_id)
     print(paciente_id)
     return render_template('deleteProfile.html')
+
+
+@app.route('/update/<paciente_id>', methods=['GET', 'POST'])
+def update(paciente_id):
+    #delete_patient(paciente_id)
+    print(paciente_id)
+    if request.method == 'POST':
+        f = request.files['file']
+        filename = os.path.join(app.config['UPLOAD_FOLDER'], f.filename)
+        f.save(filename)
+        img = cloudinary.uploader.upload(UPLOAD_FOLDER + '/' + f.filename)
+        genurl = img['url']
+        os.remove(filename)
+        print("URL", '--> ', genurl)
+        print(request.form['Name'])
+        print(request.form['LastName'])
+        print(request.form['DPI'])
+        print(request.form['option'])
+        print(request.form['Telephone'])
+        print(request.form['Email'])
+        print(request.form['Birth'])
+        print(request.form['Twitter'])
+        update_paciente(paciente_id, get_profession(request.form['TCareer'], request.form['Career']),
+                        request.form['Name'],
+                        request.form['LastName'], request.form['DPI'],
+                        request.form['option'],
+                        request.form['Telephone'], request.form['Email'], request.form['Birth'], genurl,
+                        request.form['Twitter'], 0)
+
+        return render_template('update.html')
+    else:
+
+        return render_template('update.html')
+
+
 @app.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
@@ -63,10 +100,10 @@ def add():
         print(filename)
         id = get_idpaciente()
         print(id)
-        img = cloudinary.uploader.upload(UPLOAD_FOLDER+'/'+f.filename)
+        img = cloudinary.uploader.upload(UPLOAD_FOLDER + '/' + f.filename)
         genurl = img['url']
         os.remove(filename)
-        print("URL",'--> ',genurl)
+        print("URL", '--> ', genurl)
         print(request.form['Name'])
         print(request.form['LastName'])
         print(request.form['DPI'])
@@ -75,7 +112,8 @@ def add():
         print(request.form['Email'])
         print(request.form['Birth'])
         print(request.form['Twitter'])
-        insert_patient(id, get_profession(request.form['TCareer'],request.form['Career']), request.form['Name'], request.form['LastName'], request.form['DPI'],
+        insert_patient(id, get_profession(request.form['TCareer'], request.form['Career']), request.form['Name'],
+                       request.form['LastName'], request.form['DPI'],
                        request.form['option'],
                        request.form['Telephone'], request.form['Email'], request.form['Birth'], genurl,
                        request.form['Twitter'], 0)
