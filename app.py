@@ -11,6 +11,8 @@ import cloudinary.api
 
 from crm_actions.module1_actions import get_idpaciente, insert_patient, get_profession, get_paciente, delete_patient, \
     update_paciente
+from crm_actions.graphics import generate
+from crm_actions.power import generate_power
 
 urllib3.disable_warnings()
 
@@ -55,6 +57,8 @@ def delete(paciente_id):
 @app.route('/stats', methods=['GET', 'POST'])
 def stats():
     print("stats")
+    generate()
+    generate_power()
     return render_template('stadistics.html')
 
 @app.route('/update/<paciente_id>', methods=['GET', 'POST'])
