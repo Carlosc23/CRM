@@ -13,15 +13,43 @@ db=connection["twitter"]
 collection = db.tweets
 
 
-username=input("ingrese")
-twitter_client = TwitterClient(username)
-tweets=twitter_client.getTweets()
-followers = twitter_client.getFollowers()
-favorites = twitter_client.getFavorites()
-username={}
-username["user"]=username
-username["tweets"]=tweets
-username["numeroDeFollowers"]=followers
-username["favoritos"]=favorites
+def ingresarTwitter(theUsername):
+    twitter_client = TwitterClient(theUsername)
+    tweets=twitter_client.getTweets()
+    followers = twitter_client.getFollowers()
+    favorites = twitter_client.getFavorites()
+    print(tweets)
+    print(followers)
+    print(favorites)
+    username={}
+    username["_id"]=theUsername
+    username["tweets"]=tweets
+    username["numeroDeFollowers"]=followers
+    username["favoritos"]=favorites
 
-collection.insert(username)
+    collection.insert(username)
+
+def retornarTweets(user):
+    lista = []
+    var={}
+    for i in collection.find({"_id":user}, {"_id": 0, "tweets": 1}):
+        lista.append(i)
+    var = lista.pop()
+    return var["tweets"]
+
+def retornarTweets(user):
+    lista = []
+    var={}
+    for i in collection.find({"_id":user}, {"_id": 0, "numeroDeFollowers": 1}):
+        lista.append(i)
+    var = lista.pop()
+    return var["numeroDeFollowers"]
+
+def retornarFavs(user):
+    lista = []
+    var={}
+    for i in collection.find({"_id":user}, {"_id": 0, "favoritos": 1}):
+        lista.append(i)
+    var = lista.pop()
+    return var["favoritos"]
+
