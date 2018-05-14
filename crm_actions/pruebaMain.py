@@ -18,9 +18,6 @@ def ingresarTwitter(theUsername):
     tweets=twitter_client.getTweets()
     followers = twitter_client.getFollowers()
     favorites = twitter_client.getFavorites()
-    print(tweets)
-    print(followers)
-    print(favorites)
     username={}
     username["_id"]=theUsername
     username["tweets"]=tweets
@@ -37,7 +34,7 @@ def retornarTweets(user):
     var = lista.pop()
     return var["tweets"]
 
-def retornarTweets(user):
+def retornarFollowers(user):
     lista = []
     var={}
     for i in collection.find({"_id":user}, {"_id": 0, "numeroDeFollowers": 1}):
@@ -52,4 +49,7 @@ def retornarFavs(user):
         lista.append(i)
     var = lista.pop()
     return var["favoritos"]
+
+
+ingresarTwitter("testtrishuser")
 
