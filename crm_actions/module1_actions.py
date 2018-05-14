@@ -173,6 +173,182 @@ def get_idpaciente():
             conn.close()
     return row + 1
 
+def profesion_masconsultas():
+    sql = """
+    select count(paciente.id),profesion.tipo from profesion
+    inner join paciente on paciente.idprofesion=profesion.id
+    inner join consulta on consulta.idpaciente=paciente.id
+    group by profesion.tipo
+    order by count(paciente.id) desc
+    limit 5
+    """
+    conn = None
+    try:
+        params = config()
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        cur.execute(sql)
+        data = cur.fetchall()
+        cur.close()
+        lista1 = []
+        lista2 = []
+        for i in data:
+            lista1.append(i[0])
+            lista2.append(i[1])
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+    return lista1,lista2
+
+def profesion_mascompras():
+    sql = """
+    select profesion.tipo,sum(pagomedicinas) from paciente
+inner join profesion on paciente.idprofesion=profesion.id
+group by idprofesion,profesion.tipo
+order by sum(pagomedicinas) desc
+limit 5
+    """
+    conn = None
+    try:
+        params = config()
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        cur.execute(sql)
+        data = cur.fetchall()
+        cur.close()
+        lista1 = []
+        lista2 = []
+        for i in data:
+            lista1.append(i[0])
+            lista2.append(i[1])
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+    return lista1,lista2
+
+def medicina_mascomprada():
+    sql = """
+    select medicina.nombre,compra.idmedicina,sum(compra.cantidad) from compra
+inner join medicina on compra.idmedicina=medicina.id
+group by idmedicina,medicina.nombre
+order by sum(cantidad) desc
+limit 5
+    """
+    conn = None
+    try:
+        params = config()
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        cur.execute(sql)
+        data = cur.fetchall()
+        cur.close()
+        lista1 = []
+        lista2 = []
+        for i in data:
+            lista1.append(i[0])
+            lista2.append(i[1])
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+    return lista1,lista2
+
+def meses():
+    sql = """
+    select date_part('month', fecha),sum(compra.cantidad) from compra
+group by date_part('month', fecha)
+order by sum(cantidad) desc
+    """
+    conn = None
+    try:
+        params = config()
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        cur.execute(sql)
+        data = cur.fetchall()
+        cur.close()
+        lista1 = []
+        lista2 = []
+        for i in data:
+            lista1.append(int(i[0]))
+            lista2.append(i[1])
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+    return lista1,lista2
+
+def meses_consultas():
+    sql = """
+    select date_part('month', fecha),count(date_part('month', fecha)) from consulta
+group by date_part('month', fecha)
+order by count(date_part('month', fecha)) desc
+    """
+    conn = None
+    try:
+        params = config()
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        cur.execute(sql)
+        data = cur.fetchall()
+        cur.close()
+        lista1 = []
+        lista2 = []
+        for i in data:
+            lista1.append(int(i[0]))
+            lista2.append(i[1])
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+    return lista1,lista2
+
+def departamentos():
+    sql = """
+    select count(idpaciente),departamento.nombre from direccion
+inner join departamento on departamento.id= direccion.iddepartamento
+group by departamento.id 
+order by count(idpaciente) desc
+    """
+    conn = None
+    try:
+        params = config()
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        cur.execute(sql)
+        data = cur.fetchall()
+        cur.close()
+        lista1 = []
+        lista2 = []
+        for i in data:
+            lista1.append(i[0])
+            lista2.append(i[1])
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+    return lista1,lista2
+
+"""lista1,lista2 = departamentos()
+for i in lista1:
+    print(i)
+print("---")
+for i in lista2:
+    print(i)"""
 # print(get_profession('Arquitectura','Arquitectur'))
 
 # print(get_idpaciente())

@@ -1,0 +1,45 @@
+<html>
+<head>
+  <title>CRM</title>
+  <link rel="stylesheet" type="text/css" href="{{
+  url_for('static', filename='styleMain.css') }}">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <style>
+  body,h1,h2,h3,h4,h5 {font-family:"Helvetica Neue",Helvetica,Arial}
+</style>
+</head>
+<body>
+    <div id="Overview-Screen">
+      <h1>  Statistics</h1>
+    </div>
+        <div id="sidebar">
+              <ul>
+                <li><h1> Welcome!</h1>
+                <li><a href="main.html">Dashboard</a></li>
+
+                <li>
+                  <dt>Database Manager</dt>
+                    <dd><a href="add"> - Add Client</a></dd>
+                    <dd><a href="search"> - Search Client</a></dd>
+
+                  </li>
+
+                <li><a href="sm">Social Media</a></li>
+                <li><a href="stats">Statistics</a></li>
+              </ul>
+        </div>
+<div class="w3-select w3-display-position" style="width:80%;top:100px;left:250px">
+   <p>Click on the staditic image to download a ppt with relevant graphics:<p>
+
+<a href="{{
+  url_for('static', filename='test.pptx') }}"download>
+  <img border="0" src="{{
+  url_for('static', filename='tmpImages/statistics-market-icon.png') }}" alt="W3Schools" width="104" height="142">
+</a>
+
+</div>
+
+
+
+</body>
+</html>

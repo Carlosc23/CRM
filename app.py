@@ -52,6 +52,10 @@ def delete(paciente_id):
     print(paciente_id)
     return render_template('deleteProfile.html')
 
+@app.route('/stats', methods=['GET', 'POST'])
+def stats():
+    print("stats")
+    return render_template('stadistics.html')
 
 @app.route('/update/<paciente_id>', methods=['GET', 'POST'])
 def update(paciente_id):
