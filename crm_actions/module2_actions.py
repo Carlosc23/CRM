@@ -30,12 +30,12 @@ class TwitterClient():
 
     def getFollowers(self):
         followers=[]
-        try:
-            for i in Cursor(self.twitter_client.followers_ids,id=self.twitter_user).items():
-                followers.append(i)
-            return followers
-        except Exception as e:
-            print("Followers empty")
+       #try:
+        for i in Cursor(self.twitter_client.followers_ids,id=self.twitter_user).items():
+            followers.append(i)
+        return len(followers)
+        #except Exception as e:
+            #print("Followers empty")
     def getFavorites(self):
         favorites=[]
         try:
@@ -43,7 +43,7 @@ class TwitterClient():
                 favorites.append(i.text)
             return favorites
         except Exception as e:
-            print("Followers empty")
+            print("Favorites empty")
     def getFollowersNames(self):
         followers=[]
         followersNames=[]
@@ -53,7 +53,7 @@ class TwitterClient():
             for i in followers:
                 u = self.twitter_client.get_user(i)
                 followersNames.append(u.screen_name)
-            return followersNames
+            return len(followersNames)
         except Exception as e:
             print("Followers empty")
 class TwitterAuthenticator():

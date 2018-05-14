@@ -7,6 +7,8 @@ from tweepy import Stream
 from tweepy import Cursor
 from tweepy import API
 import twitterCredentials
+import re
+
 
 connection = pymongo.MongoClient()
 db=connection["twitter"]
@@ -51,5 +53,27 @@ def retornarFavs(user):
     return var["favoritos"]
 
 
-ingresarTwitter("testtrishuser")
+def retornarListaTweetsCategoria(categorias):
+    lista=[]
+    listaResultado=[]
+    dic={}
+    for j in categorias:
+        regex=re.compile("^"+j,re.IGNORECASE)
+        for i in collection.find({"tweets": {"$regex": regex}}, {"tweets": {"$elemMatch": {"$regex": regex}}}):
+            lista.append(i)
+        dic = lista.pop()
+        listaResultado.append(dic["tweets"])
+    return listaResultado
+
+def todosLosTweets():
+    lista=[]
+    listaResultado=[]
+    for i in collection.find({},{"_id":0,"tweets":1}):
+        lista.append(i)
+    listaDeListas= [d['tweets'] for d in lista]
+    listaResultado=[]
+    for row in listaDeListas:
+        for elem in row:
+            listaResultado.append(elem)
+    return listaResultado
 
