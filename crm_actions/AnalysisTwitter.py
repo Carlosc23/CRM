@@ -4,49 +4,64 @@ import matplotlib.pyplot as plt
 import twitterCredentials
 from tweepy import OAuthHandler
 
-def percentage(parte,entero):
-    return 100*float(parte)/float(entero)
+import re
 
 
-auth = OAuthHandler(twitterCredentials.CONSUMER_KEY, twitterCredentials.CONSUMER_SECRET)
-auth.set_access_token(twitterCredentials.ACCESS_TOKEN, twitterCredentials.ACCESS_TOKEN_SECRET)
+def porcentaje(total,valor):
+    return 100*(float(valor)/float(total))
 
-api = tweepy.API(auth)
+def sentimentAnalysis(termino,numero):
+    auth = OAuthHandler(twitterCredentials.CONSUMER_KEY, twitterCredentials.CONSUMER_SECRET)
+    auth.set_access_token(twitterCredentials.ACCESS_TOKEN, twitterCredentials.ACCESS_TOKEN_SECRET)
 
-term = input("keyword/hashtag")
-tweets= tweepy.Cursor(api.search,q=term,lang="es").items(100)
+    api = tweepy.API(auth)
 
-positivo = 0
-negativo =0
-neutral =0
-polaridad =0
-contador=0
-for tweet in tweets:
-    contador+=1
-    analysis= TextBlob(tweet.text)
-    polaridad = analysis.sentiment.polarity
-    if (analysis.sentiment.polarity==0):
-        neutral=0
-    elif (analysis.sentences.polarity<0.00):
-        negativo=negativo+1
-    elif(analysis.sentences.polarity>0.00):
-        positivo=positivo+1
-positivo = percentage(positivo,contador)
-negativo = percentage(negativo,contador)
-neutral = percentage(neutral,contador)
 
-positivo = format(positivo,'.2f')
-negativo = format(negativo,'.2f')
-neutral = format(neutral,'.2f')
+    tweets= tweepy.Cursor(api.search,q=termino).items(numero)
 
-labels=['Positive ['+str(positivo)+'%]','Neutral ['+str(neutral)+'%]','Negative ['+str(negativo)+'%]']
-sizez=[positivo,neutral,negativo]
-colors=["red","yellow","green"]
+    positivo =0
+    negativo = 0
+    neutral=0
+    polaridad=0
 
-patches,texts=plt.pie(sizez,colors=colors,startangle=90)
+    for tweet in tweets:
+        analysis=TextBlob(tweet.text)
+        polaridad+=analysis.sentiment.polarity
+        if(analysis.sentiment.polarity==0):
+            neutral+=1
+        elif(analysis.sentiment.polarity<0):
+            negativo+=1
+        elif(analysis.sentiment.polarity>0):
+            positivo+=1
+    positivo=porcentaje(numero,positivo)
+    neutral = porcentaje(numero,neutral)
+    negativo=porcentaje(numero,negativo)
 
-plt.legend(patches,labels,loc="best")
-plt.title("Resultado")
-plt.axis('equal')
-plt.tight_layout()
-plt.show()
+    positivo=format(positivo,'.2f')
+    neutral=format(neutral,'.2f')
+    negativo=format(negativo,'.2f')
+
+    print("termino"+termino+"analizando"+str(numero)+"tweets")
+    if(polaridad==0):
+        print("Neutral")
+    elif(polaridad<0):
+        print("Negativo")
+    elif(polaridad>0):
+        print("Positivo")
+
+    print(positivo)
+    print(negativo)
+    print(neutral)
+    labels=['Positivo['+str(positivo)+'%]','Neutral['+str(neutral)+'%]','Negativo['+str(negativo)+'%]']
+    size=[positivo,neutral,negativo]
+    colors=["red","yellow","green"]
+
+    patches,text=plt.pie(size,colors=colors,startangle=90)
+    plt.legend(patches,labels,loc="best")
+    plt.title("termino"+" "+termino+" "+"analizando"+" "+str(numero)+" "+"tweets")
+    plt.axis('equal')
+    plt.tight_layout()
+    return plt.savefig("image.png")
+
+
+
